@@ -6,28 +6,22 @@
 // $dbname = "descomplica";
 
 // Dados do Servidor Web
-$servername = "192.95.43.212:3306";
-$username = "gama";
-$password = "t!m305";
-$dbname = "descomplica";
+$servername = "mysql.hostinger.com.br";
+$username = "u637621653_agend";
+$password = "icaro1010";
+$dbname = "u637621653_agend";
 
 // Dados do Usuario
-$nome = isset($_GET['nome']) ? $_GET['nome'] : NULL;
-$email = isset($_GET['email']) ? $_GET['email'] : NULL;
-//Get IP connection
-$ip = getenv('HTTP_CLIENT_IP')?:
-getenv('HTTP_X_FORWARDED_FOR')?:
-getenv('HTTP_X_FORWARDED')?:
-getenv('HTTP_FORWARDED_FOR')?:
-getenv('HTTP_FORWARDED')?:
-getenv('REMOTE_ADDR');
-	//End IP Connection
+$nome = isset($_POST['name']) ? $_POST['name'] : NULL;
+$tel = isset($_POST['phone']) ? $_POST['phone'] : NULL;
+$email = isset($_POST['email']) ? $_POST['email'] : NULL;
+
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
-$sql = $conn->query("SELECT * FROM pessoas WHERE email='".$email."'");
+$sql = $conn->query("SELECT * FROM contato WHERE email='".$email."'");
 if(mysqli_num_rows($sql) > 0){
     echo 'Pessoa ja cadastrada no sistemas!!!';
-    header("Location: cadastrado.php");
+    header("Location: index.html");
     exit();
 }
 else {
@@ -36,10 +30,10 @@ else {
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-$sql = "INSERT INTO pessoas (nome, email, data_cad, ip)
-VALUES ('".$nome."','".$email."',NOW(),'".$ip."')";
+$sql = "INSERT INTO contato (nome, telefone, email)
+VALUES ('".$nome."','".$tel."','".$email."')";
 if ($conn->query($sql) === TRUE) {
-    header("Location: livro.php");
+    header("Location: contact.html");
 } else {
     echo "Error: " . $sql . "<br>" . $conn->error;
 }
